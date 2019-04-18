@@ -24,7 +24,7 @@ class App extends Component {
             Spaceship
           </div>
         </header>
-        <div id="mapdiv" styles={{height:"300px"}}></div>
+        <div id="mapdiv" style={{height:"300px"}}></div>
       </div>
     );
   }
