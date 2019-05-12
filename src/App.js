@@ -3,12 +3,16 @@ import './App.css';
 // import L from 'leaflet';
 import { geoMercator, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
+import cities from "./citiesPopulation";
+
+console.log(cities);
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       worldData: [],
+      cities: cities
     }
 
     this.handleCountryClick = this.handleCountryClick.bind(this);
