@@ -5,8 +5,6 @@ import { geoMercator, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import cities from "./citiesPopulation";
 
-console.log(cities);
-
 class App extends Component {
   constructor() {
     super();
@@ -16,6 +14,7 @@ class App extends Component {
     }
 
     this.handleCountryClick = this.handleCountryClick.bind(this);
+    this.handleMarkerClick = this.handleMarkerClick.bind(this);
   }
 
   projection() {
@@ -26,6 +25,10 @@ class App extends Component {
 
   handleCountryClick(countryIndex) {
     console.log("clicked on a country: ", this.state.worldData[countryIndex])
+  }
+
+  handleMarkerClick(markerIndex) {
+    console.log("Marker: ", this.state.cities[markerIndex])
   }
 
   componentDidMount() {
@@ -76,19 +79,26 @@ class App extends Component {
                   fill={`rgba(38,50,56,${1 / this.state.worldData.length * i})`}
                   stroke="#FFFFFF"
                   strokeWidth={0.5}
-                  onClick={() => this.handleCountryClick(i) }
+                  onClick={() => this.handleCountryClick(i)}
                 />
               ))
             }
           </g>
           <g className="markers">
-            <circle
-              cx={this.projection()([8,48])[0]}
-              cy={this.projection()([8,48])[1]}
-              r={10}
-              fill="#E91E63"
-              className="marker"
-            />
+          {
+            this.state.cities.map((city, i) => (
+              <circle
+                key={ `marker-${i}` }
+                cx={ this.projection()(city.coordinates)[0] }
+                cy={ this.projection()(city.coordinates)[1] }
+                r={ city.population / 3000000 }
+                fill="#E91E63"
+                stroke="#FFFFFF"
+                className="marker"
+                onClick={ () => this.handleMarkerClick(i) }
+              />
+            ))
+          }
           </g>
         </svg>
         <div id="mapdiv" style={{height:"500px"}}></div>
